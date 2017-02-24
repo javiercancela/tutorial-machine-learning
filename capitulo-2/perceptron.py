@@ -35,19 +35,10 @@ class Perceptron(object):
     def predict(self, X):
         return np.where(self.net_input(X) >= 0.0, 1, -1)
 
-def array_to_file(data, logfile):
+def array_to_file(name, data, logfile):
+    logfile.write('\nVariable: {0}\n'.format(name))
     logfile.write('# Array shape: {0}\n'.format(data.shape))
-
-    if data.ndim > 1:
-        # Iterating through a ndimensional array produces slices along
-        # the last axis. This is equivalent to data[i,:,:] in this case
-        for data_slice in data:
-            np.savetxt(logfile, data_slice)
-
-            # Writing out a break to indicate different slices...
-            logfile.write('# New slice\n')
-    else:
-        np.savetxt(logfile, data)
+    logfile.write(str(data))
 
 def print_header(header_text, logfile):
     logfile.write('\n\n\n' + 50 * '=' + '\n')
@@ -68,10 +59,11 @@ def plot_data(df, logfile):
     y = df.iloc[0:100, 4].values
     # Sustituimos Iris-setosa por -1, e Iris-virginica por 1
     y = np.where(y == 'Iris-setosa', -1, 1)
-    array_to_file(y, logfile)
+    array_to_file('y', y, logfile)
 
     # extract sepal length and petal length
     X = df.iloc[0:100, [0, 2]].values
+    array_to_file('X', X, logfile)
 
     # # plot data
     plt.scatter(X[:50, 0], X[:50, 1], color='red', marker='o', label='setosa')
