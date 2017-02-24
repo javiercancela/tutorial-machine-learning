@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-
+import os
 
 class Perceptron(object):
     """Perceptron classifier.
@@ -114,8 +114,7 @@ print(50 * '=')
 print('Section: Training a perceptron model on the Iris dataset')
 print(50 * '-')
 
-df = pd.read_csv('https://archive.ics.uci.edu/ml/'
-                 'machine-learning-databases/iris/iris.data', header=None)
+df = pd.read_csv(r'.\data\iris.data', header=None)
 print(df.tail())
 
 #############################################################################
