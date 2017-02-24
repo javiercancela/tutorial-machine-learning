@@ -35,8 +35,9 @@ class Perceptron(object):
     def predict(self, X):
         return np.where(self.net_input(X) >= 0.0, 1, -1)
 
-def array_to_file(name, data, logfile):
+def array_to_file(name, data, logfile, desc=''):
     logfile.write('\nVariable: {0}\n'.format(name))
+    logfile.write('\Descripción: {0}\n'.format(desc))
     logfile.write('# Array shape: {0}\n'.format(data.shape))
     logfile.write(str(data))
 
@@ -75,8 +76,22 @@ def plot_data(df, logfile):
 
     plt.show()
 
-ppn = Perceptron(eta=0.1, n_iter=10)
+def train_model(ppn):
+    logfile = ppn.logfile
+    print_header('Training the perceptron model', logfile)
+    ppn.fit(X, y)
 
-with open(r'./logs/logfile.txt', 'w') as ppn.logfile:
-    df_global = open_data(ppn.logfile)
-    plot_data(df_global, ppn.logfile)
+    plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
+    plt.xlabel('Epochs')
+    plt.ylabel('Number of misclassifications')
+
+    plt.show()
+
+ppn_global = Perceptron(eta=0.1, n_iter=10)
+
+with open(r'./logs/logfile.txt', 'w') as ppn_global.logfile:
+    df_global = open_data(ppn_global.logfile)
+    plot_data(df_global, ppn_global.logfile)
+    train_model(ppn_global)
+
+
